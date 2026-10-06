@@ -1,0 +1,25 @@
+import time
+from playwright.sync_api import sync_playwright
+
+with sync_playwright() as p:
+    browser = p.chromium.launch()
+    page = browser.new_page(viewport={'width': 1280, 'height': 900})
+    page.goto('http://localhost:8505')
+    page.wait_for_selector('.header-card')
+    page.locator("button:has-text('Data Science')").click()
+    time.sleep(1)
+    page.locator("input[aria-label*='Faculty Name']").fill('Dr. Sathya')
+    page.locator("button:has-text('Begin Staircase Activity')").click()
+    time.sleep(1)
+    page.locator("button:has-text('Save & Ascend to Level 2')").click()
+    time.sleep(1)
+    page.locator("button:has-text('Save & Ascend to Level 3')").click()
+    time.sleep(1)
+    page.locator("button:has-text('Save & Ascend to Level 4')").click()
+    time.sleep(1)
+    page.locator("button:has-text('Complete Staircase & View Showcase')").click()
+    time.sleep(2)
+    page.wait_for_selector('.stair-visual-wrapper')
+    page.screenshot(path='test_artifacts/07_showcase_top.png')
+    browser.close()
+print("Captured 07_showcase_top.png successfully")
